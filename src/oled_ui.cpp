@@ -1,16 +1,16 @@
-#include "oled_ui.h"
-#include "config.h"
-#include <U8g2lib.h>
+#include "oled_ui.h"  // OLED 显示界面管理
+#include "config.h"  // 配置文件
+#include <U8g2lib.h>  // U8g2 OLED 显示库
 
 // 恢复为确保 100% 能够点亮屏幕的 U8g2 构造方式
-static U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2(U8G2_R0, PIN_OLED_SCL, PIN_OLED_SDA, U8X8_PIN_NONE);
+static U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2(U8G2_R0, PIN_OLED_SCL, PIN_OLED_SDA, U8X8_PIN_NONE); // 使用软件 I2C，避免与 I2S 冲突
 
-static UiState g_state = UI_STATE_IDLE;
-static int g_volume = 80;
-static bool g_locked = false;
-static bool g_wifi_ok = false;
-static bool g_ws_ok = false;
-static String g_ip = "Connecting...";
+static UiState g_state = UI_STATE_IDLE; // 当前显示状态
+static int g_volume = 80;  // 当前音量百分比 (0-100)
+static bool g_locked = false;  // 当前是否被管理员锁定
+static bool g_wifi_ok = false;  // 当前 Wi-Fi 连接状态
+static bool g_ws_ok = false;  // 当前 WebSocket 连接状态
+static String g_ip = "Connecting...";  // 当前 Wi-Fi IP 地址
 static unsigned long g_warn_start_time = 0;
 static unsigned long g_last_render_tick = 0;
 
